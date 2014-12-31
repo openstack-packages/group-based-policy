@@ -1,22 +1,12 @@
-%global commit 011bcf605a755e7039904b1764490964cb57dd5b
-%global commitseq 19
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:		openstack-neutron-gbp
 Version:	2014.2
-Release:	0.3.%{shortcommit}git%{?dist}
+Release:	0.4.rc1%{?dist}
 Summary:	Group Based Policy service plugin for OpenStack Networking Service
 
-Group:		Applications/System
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-# The source tarball is created as follows:
-#  git clone git://git.openstack.org/stackforge/group-based-policy
-#  cd group-based-policy
-#  git checkout %%{commit}
-#  python setup.py sdist
-Source0:	group-based-policy-%{version}.dev%{commitseq}.g%{shortcommit}.tar.gz
+Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-2014.2rc1.tar.gz
 
 Patch0:		0001-remove-runtime-dependency-on-pbr.patch
 
@@ -38,7 +28,7 @@ that can be applied between groups of network endpoints.
 
 
 %prep
-%setup -qn group-based-policy-%{version}.dev%{commitseq}.g%{shortcommit}
+%setup -qn group-based-policy-%{version}rc1
 
 %patch0 -p1
 
@@ -57,19 +47,26 @@ rm -f requirements.txt
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Remove unused files
-rm -rf %{buildroot}%{python_sitelib}/gbp/neutron/tests
-rm -rf %{buildroot}%{python_sitelib}/gbp/tests
+rm -rf %{buildroot}%{python2_sitelib}/gbp/neutron/tests
+rm -rf %{buildroot}%{python2_sitelib}/gbp/tests
 
 
 %files
 %doc LICENSE
 %doc README.rst
+%doc etc/grouppolicy.ini
 %{_bindir}/gbp-db-manage
-%{python_sitelib}/gbp
-%{python_sitelib}/group_based_policy-%%{version}*.egg-info
+%{python2_sitelib}/gbp
+%{python2_sitelib}/group_based_policy-%%{version}*.egg-info
 
 
 %changelog
+* Tue Dec 30 2014 Robert Kukura <rk@theep.net> - 2014.2-0.4.rc1
+- Update to rc1
+- Remove Group tag
+- Use python2_sitelib instead of python_sitelib
+- Package sample config file fragment
+
 * Mon Dec 15 2014 Robert Kukura <rk@theep.net> - 2014.2-0.3.acb85f0git
 - Don't require specific neutron stable version
 - Update to latest upstream commit
