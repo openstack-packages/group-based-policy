@@ -1,12 +1,12 @@
 Name:		openstack-neutron-gbp
 Version:	2014.2
-Release:	0.5.rc2%{?dist}
+Release:	0.6.rc3%{?dist}
 Summary:	Group Based Policy service plugin for OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-2014.2rc2.tar.gz
+Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-2014.2rc3.tar.gz
 
 Patch0:		0001-remove-runtime-dependency-on-pbr.patch
 
@@ -28,7 +28,7 @@ that can be applied between groups of network endpoints.
 
 
 %prep
-%setup -qn group-based-policy-%{version}rc2
+%setup -qn group-based-policy-%{version}rc3
 
 %patch0 -p1
 
@@ -61,6 +61,9 @@ rm -rf %{buildroot}%{python2_sitelib}/gbpservice/tests
 
 
 %changelog
+* Mon Jan  5 2015 Robert Kukura <rk@theep.net> - 2014.2-0.6.rc3
+- Update to rc3
+
 * Mon Jan  5 2015 Robert Kukura <rk@theep.net> - 2014.2-0.5.rc2
 - Update to rc2
 - Updates for renamed top-level python module
