@@ -5,13 +5,13 @@ Subject: [PATCH] remove runtime dependency on pbr
 
 Change-Id: I29be7a60254d721c39e3d7a4a1b8b0d8f13250d1
 ---
- gbp/__init__.py | 6 +-----
+ gbpservice/__init__.py | 6 +-----
  1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/gbp/__init__.py b/gbp/__init__.py
+diff --git a/gbpservice/__init__.py b/gbpservice/__init__.py
 index dc4150d..ade10e0 100644
---- a/gbp/__init__.py
-+++ b/gbp/__init__.py
+--- a/gbpservice/__init__.py
++++ b/gbpservice/__init__.py
 @@ -12,8 +12,4 @@
  # License for the specific language governing permissions and limitations
  # under the License.
