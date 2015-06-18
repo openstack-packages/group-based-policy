@@ -2,7 +2,7 @@
 
 Name:		openstack-neutron-gbp
 Version:	2014.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Group Based Policy service plugin for OpenStack Networking Service
 
 License:	ASL 2.0
@@ -63,6 +63,9 @@ rm -rf %{buildroot}%{python2_sitelib}/gbpservice/tests
 
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Wed Jan  7 2015 Robert Kukura <rk@theep.net> - 2014.2-1
 - Update to upstream 2014.2
 
