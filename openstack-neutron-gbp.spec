@@ -1,16 +1,16 @@
 %global release_name kilo
 
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+
 Name:		openstack-neutron-gbp
-Version:	2015.1.1
-Release:	1%{?dist}
+Version:	XXX
+Release:	XXX
 Summary:	Group Based Policy service plugin for OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-Source0:	https://launchpad.net/group-based-policy/%{release_name}/%{version}/+download/group-based-policy-%{version}.tar.gz
-
-Patch0:		0001-remove-runtime-dependency-on-pbr.patch
+Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-stable-kilo.tar.gz
 
 BuildArch:	noarch
 
@@ -30,16 +30,12 @@ that can be applied between groups of network endpoints.
 
 
 %prep
-%setup -qn group-based-policy-%{version}
-
-%patch0 -p1
+%setup -qn group-based-policy-%{upstream_version}
 
 # Remove precompiled egg-info
 rm -rf *.egg-info
 
 find gbpservice -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
-
-sed -i 's/RPMVERSION/%{version}/' gbpservice/__init__.py
 
 rm -f requirements.txt
 
@@ -81,40 +77,7 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/servicechain/*/*/*.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/servicechain/plugins/msc/*.ini
 %{_bindir}/gbp-db-manage
 %{python2_sitelib}/gbpservice
-%{python2_sitelib}/group_based_policy-%%{version}*.egg-info
+%{python2_sitelib}/group_based_policy-*.egg-info
 
 
 %changelog
-* Mon Oct  5 2015 Robert Kukura <rk@theep.net> - 2015.1.1-1
-- Update to upstream 2015.1.1
-- Package config files
-- Remove precompiled egg-info
-
-* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2014.2-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
-
-* Wed Jan  7 2015 Robert Kukura <rk@theep.net> - 2014.2-1
-- Update to upstream 2014.2
-
-* Mon Jan  5 2015 Robert Kukura <rk@theep.net> - 2014.2-0.6.rc3
-- Update to rc3
-
-* Mon Jan  5 2015 Robert Kukura <rk@theep.net> - 2014.2-0.5.rc2
-- Update to rc2
-- Updates for renamed top-level python module
-
-* Tue Dec 30 2014 Robert Kukura <rk@theep.net> - 2014.2-0.4.rc1
-- Update to rc1
-- Remove Group tag
-- Use python2_sitelib instead of python_sitelib
-- Package sample config file fragment
-
-* Mon Dec 15 2014 Robert Kukura <rk@theep.net> - 2014.2-0.3.acb85f0git
-- Don't require specific neutron stable version
-- Update to latest upstream commit
-
-* Thu Dec  4 2014 Robert Kukura <rk@theep.net> - 2014.2-0.2.acb85f0git
-- Update to commmit with renamed resources
-
-* Mon Nov 17 2014 Robert Kukura <rk@theep.net> - 2014.2-0.1.b3be657git
-- Initial package for Fedora
