@@ -1,14 +1,14 @@
-%global release_name kilo
+%global release_name liberty
 
 Name:		openstack-neutron-gbp
-Version:	2015.1.1
-Release:	2%{?dist}
+Version:	2015.2.0
+Release:	1%{?dist}
 Summary:	Group Based Policy service plugin for OpenStack Networking Service
 
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-Source0:	https://launchpad.net/group-based-policy/%{release_name}/%{version}/+download/group-based-policy-%{version}.tar.gz
+Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-%{version}.tar.gz
 
 Patch0:		0001-remove-runtime-dependency-on-pbr.patch
 
@@ -85,6 +85,9 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/servicechain/*/*/*.ini
 
 
 %changelog
+* Fri Feb 12 2016 Alan Pevec <alan.pevec@redhat.com> 2015.2.0-1
+- Update to 2015.2.0
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2015.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
