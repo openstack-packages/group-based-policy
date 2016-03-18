@@ -18,7 +18,7 @@ BuildRequires:	python2-devel
 BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
 
-Requires:	openstack-neutron >= 2015.1
+Requires:	openstack-neutron >= 7.0
 Requires:	python-pbr
 
 
