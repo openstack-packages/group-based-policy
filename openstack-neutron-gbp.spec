@@ -1,4 +1,4 @@
-%global release_name kilo
+%global service group-based-policy
 
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
@@ -10,7 +10,7 @@ Summary:	Group Based Policy service plugin for OpenStack Networking Service
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-stable-kilo.tar.gz
+Source0:	http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 BuildArch:	noarch
 
@@ -19,7 +19,7 @@ BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
 
 Requires:	openstack-neutron >= 2015.1
-Requires:	openstack-neutron < 2015.2
+Requires:	python-pbr
 
 
 %description
@@ -31,9 +31,6 @@ that can be applied between groups of network endpoints.
 
 %prep
 %setup -qn group-based-policy-%{upstream_version}
-
-# Remove precompiled egg-info
-rm -rf *.egg-info
 
 find gbpservice -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 
@@ -64,7 +61,7 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/servicechain/*/*/*.ini
 
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc README.rst
 %dir %{_sysconfdir}/neutron/group-based-policy
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/group-based-policy/*.ini
