@@ -1,4 +1,6 @@
-%global release_name liberty
+%global service group-based-policy
+
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:		openstack-neutron-gbp
 Version:	2015.2.0
@@ -8,9 +10,7 @@ Summary:	Group Based Policy service plugin for OpenStack Networking Service
 License:	ASL 2.0
 URL:		https://launchpad.net/group-based-policy
 
-Source0:	http://tarballs.openstack.org/group-based-policy/group-based-policy-%{version}.tar.gz
-
-Patch0:		0001-remove-runtime-dependency-on-pbr.patch
+Source0:	http://tarballs.openstack.org/%{service}/%{service}-%{upstream_version}.tar.gz
 
 BuildArch:	noarch
 
@@ -19,7 +19,7 @@ BuildRequires:	python-pbr
 BuildRequires:	python-setuptools
 
 Requires:	openstack-neutron >= 2015.1
-Requires:	openstack-neutron < 2015.2
+Requires:	python-pbr
 
 
 %description
@@ -30,16 +30,9 @@ that can be applied between groups of network endpoints.
 
 
 %prep
-%setup -qn group-based-policy-%{version}
-
-%patch0 -p1
-
-# Remove precompiled egg-info
-rm -rf *.egg-info
+%setup -qn group-based-policy-%{upstream_version}
 
 find gbpservice -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
-
-sed -i 's/RPMVERSION/%{version}/' gbpservice/__init__.py
 
 rm -f requirements.txt
 
@@ -68,7 +61,7 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/servicechain/*/*/*.ini
 
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc README.rst
 %dir %{_sysconfdir}/neutron/group-based-policy
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/group-based-policy/*.ini
@@ -81,7 +74,7 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/servicechain/*/*/*.ini
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/servicechain/plugins/msc/*.ini
 %{_bindir}/gbp-db-manage
 %{python2_sitelib}/gbpservice
-%{python2_sitelib}/group_based_policy-%%{version}*.egg-info
+%{python2_sitelib}/group_based_policy-*.egg-info
 
 
 %changelog
